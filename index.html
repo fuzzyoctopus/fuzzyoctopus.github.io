@@ -17,10 +17,68 @@
         p {
             font-size: 24px;
         }
+        .letter {
+            display: inline-block;
+            transition: opacity 0.2s, transform 0.2s;
+        }
     </style>
 </head>
 <body>
-    <h1>Code Name: Software</h1>
+    <h1>Code Name: <span id="dynamic-word"></span></h1>
     <p>We make fast software. The name is not so important.</p>
+
+    <script>
+        const words = ["Software", "Duocito", "Accurate Mining", "Solutions", "Programs", "Tools"];
+        let index = 0;
+
+        function typeWord() {
+            const wordElement = document.getElementById("dynamic-word");
+            const newWord = words[index].split('');
+            newWord.forEach((letter, i) => {
+                setTimeout(() => {
+                    const span = document.createElement('span');
+                    span.className = 'letter';
+                    span.textContent = letter;
+                    
+                    
+                    wordElement.appendChild(span);
+
+                    setTimeout(() => {
+                        span.style.opacity = '1';
+                        
+                    }, 50); // Speed of typing effect
+                }, i * 100); // Adjust speed of typing here
+            });
+
+            index = (index + 1) % words.length;
+        }
+
+        function changeWord() {
+            const wordElement = document.getElementById("dynamic-word");
+            const currentWord = wordElement.textContent.split('');
+
+            // Step 1: Delete the current word
+            Array.from(wordElement.children).forEach((span, i) => {
+                setTimeout(() => {
+                    
+
+                    setTimeout(() => {
+                        span.remove();
+                    }, 200);
+                }, i * 50); // Adjust speed of deletion here
+            });
+
+            // Step 2: Type the new word after a delay
+            setTimeout(() => {
+                typeWord();
+            }, currentWord.length * 50 + 200); // Wait for deletion to complete
+        }
+
+        // Start typing the first word immediately on load
+        typeWord();
+
+        // Change word every 3 seconds
+        setInterval(changeWord, 3000);
+    </script>
 </body>
 </html>
