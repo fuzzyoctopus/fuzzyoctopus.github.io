@@ -9,10 +9,18 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 20%;
+            padding: 0 20px;
+            box-sizing: border-box;
         }
         h1 {
             font-family: 'Courier New', Courier, monospace;
             font-size: 48px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .main-title {
+            display: inline;
         }
         p {
             font-size: 24px;
@@ -21,10 +29,15 @@
             display: inline-block;
             transition: opacity 0.2s, transform 0.2s;
         }
+        @media (min-width: 600px) {
+            h1 {
+                flex-direction: row;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>Code Name: <span id="dynamic-word"></span></h1>
+    <h1><span class="main-title">Code Name:</span> <span id="dynamic-word"></span></h1>
     <p>We make pretty good software.</p>
 
     <script>
@@ -33,19 +46,17 @@
 
         function typeWord() {
             const wordElement = document.getElementById("dynamic-word");
+            wordElement.textContent = '';  // Clear any existing content
             const newWord = words[index].split('');
             newWord.forEach((letter, i) => {
                 setTimeout(() => {
                     const span = document.createElement('span');
                     span.className = 'letter';
                     span.textContent = letter;
-                    
-                    
                     wordElement.appendChild(span);
 
                     setTimeout(() => {
                         span.style.opacity = '1';
-                        
                     }, 50); // Speed of typing effect
                 }, i * 100); // Adjust speed of typing here
             });
@@ -60,8 +71,7 @@
             // Step 1: Delete the current word
             Array.from(wordElement.children).forEach((span, i) => {
                 setTimeout(() => {
-                    
-
+                    span.style.opacity = '0';
                     setTimeout(() => {
                         span.remove();
                     }, 200);
