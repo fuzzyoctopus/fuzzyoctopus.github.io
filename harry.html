@@ -26,6 +26,19 @@
         #stats {
             margin-top: 20px;
         }
+        #history {
+            margin-top: 20px;
+            text-align: left;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .correct {
+            color: green;
+        }
+        .incorrect {
+            color: red;
+        }
     </style>
 </head>
 <body>
@@ -34,6 +47,7 @@
     <input type="number" id="answer" autofocus>
     <div id="result"></div>
     <div id="stats"></div>
+    <div id="history"></div>
 
     <script>
         let num1, num2, correctAnswer;
@@ -41,6 +55,7 @@
         let correctAnswers = 0;
         let startTime;
         let totalTime = 0;
+        let history = [];
 
         function generateProblem() {
             num1 = Math.floor(Math.random() * 10);
@@ -61,14 +76,29 @@
                 const userAnswer = parseInt(document.getElementById('answer').value);
                 totalQuestions++;
                 
+                let resultText;
+                let isCorrect;
                 if (userAnswer === correctAnswer) {
-                    document.getElementById('result').textContent = `Correct! Time: ${timeTaken.toFixed(2)} seconds`;
+                    resultText = `Correct! Time: ${timeTaken.toFixed(2)} seconds`;
                     correctAnswers++;
+                    isCorrect = true;
                 } else {
-                    document.getElementById('result').textContent = `Incorrect. The correct answer is ${correctAnswer}. Time: ${timeTaken.toFixed(2)} seconds`;
+                    resultText = `Incorrect. The correct answer is ${correctAnswer}. Time: ${timeTaken.toFixed(2)} seconds`;
+                    isCorrect = false;
                 }
 
+                document.getElementById('result').textContent = resultText;
+
+                history.unshift({
+                    problem: `${num1} × ${num2}`,
+                    userAnswer: userAnswer,
+                    correctAnswer: correctAnswer,
+                    timeTaken: timeTaken,
+                    isCorrect: isCorrect
+                });
+
                 updateStats();
+                updateHistory();
                 setTimeout(generateProblem, 1000);
             }
         }
@@ -80,6 +110,22 @@
                 Score: ${correctAnswers}/${totalQuestions} (${percentage}%)<br>
                 Average time per question: ${averageTime} seconds
             `;
+        }
+
+        function updateHistory() {
+            const historyElement = document.getElementById('history');
+            historyElement.innerHTML = '<h3>Answer History:</h3>';
+            history.forEach((item, index) => {
+                if (index < 10) {  // Show only the last 10 answers
+                    const className = item.isCorrect ? 'correct' : 'incorrect';
+                    historyElement.innerHTML += `
+                        <div class="${className}">
+                            ${item.problem} = ${item.userAnswer} 
+                            (Correct: ${item.correctAnswer}, Time: ${item.timeTaken.toFixed(2)}s)
+                        </div>
+                    `;
+                }
+            });
         }
 
         document.getElementById('answer').addEventListener('keypress', checkAnswer);
