@@ -99,7 +99,13 @@
 
                 updateStats();
                 updateHistory();
-                setTimeout(generateProblem, 1000);
+
+                // Instead of using setTimeout, we'll generate a new problem after updating everything
+                document.getElementById('answer').value = '';
+                setTimeout(() => {
+                    generateProblem();
+                    document.getElementById('answer').focus();
+                }, 1000);
             }
         }
 
