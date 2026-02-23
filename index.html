@@ -1,96 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Code Name: Software</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 20%;
-            padding: 0 20px;
-            box-sizing: border-box;
-        }
-        h1 {
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 48px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center; /* Add this line */
-        }
-        .main-title {
-            display: inline;
-        }
-        p {
-            font-size: 24px;
-        }
-        .letter {
-            display: inline-block;
-            transition: opacity 0.2s, transform 0.2s;
-        }
-        @media (min-width: 600px) {
-            h1 {
-                flex-direction: row;
-                justify-content: center; /* Add this line */
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code Name Software</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+
+    body {
+      background: #0d0d0d;
+      color: #e0e0e0;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 1.4rem;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .terminal {
+      text-align: left;
+      margin: 0 auto;
+    }
+
+    .terminal .line1,
+    .terminal .line2 {
+      display: block;
+    }
+
+    .cursor {
+      display: inline-block;
+      width: 0.6em;
+      height: 1em;
+      background: #e0e0e0;
+      vertical-align: -0.15em;
+      margin-left: 2px;
+      animation: blink 1s step-end infinite;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    .logo {
+      margin-top: 2.5rem;
+      text-align: center;
+      font-size: 0.85rem;
+      line-height: 1.2;
+      padding: 0.25em 0.4em;
+      border: 1px solid #444;
+      aspect-ratio: 1;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 2.5em;
+    }
+
+    .logo .logo-line1,
+    .logo .logo-line2 {
+      display: block;
+    }
+
+    footer {
+      margin-top: 3rem;
+      font-size: 0.875rem;
+      color: #888;
+    }
+
+    footer a {
+      color: #888;
+    }
+
+    footer a:hover {
+      color: #e0e0e0;
+    }
+  </style>
 </head>
 <body>
-    <h1><span class="main-title">Code Name:</span> <span id="dynamic-word"></span></h1>
-    <p>We make pretty good software.</p>
-
-    <script>
-        const words = ["Software", "Duocito", "Accurate", "Solutions", "Programs", "Tools"];
-        let index = 0;
-
-        function typeWord() {
-            const wordElement = document.getElementById("dynamic-word");
-            wordElement.textContent = '';  // Clear any existing content
-            const newWord = words[index].split('');
-            newWord.forEach((letter, i) => {
-                setTimeout(() => {
-                    const span = document.createElement('span');
-                    span.className = 'letter';
-                    span.textContent = letter;
-                    wordElement.appendChild(span);
-
-                    setTimeout(() => {
-                        span.style.opacity = '1';
-                    }, 50); // Speed of typing effect
-                }, i * 100); // Adjust speed of typing here
-            });
-
-            index = (index + 1) % words.length;
-        }
-
-        function changeWord() {
-            const wordElement = document.getElementById("dynamic-word");
-            const currentWord = wordElement.textContent.split('');
-
-            // Step 1: Delete the current word
-            Array.from(wordElement.children).forEach((span, i) => {
-                setTimeout(() => {
-                    span.style.opacity = '0';
-                    setTimeout(() => {
-                        span.remove();
-                    }, 200);
-                }, i * 50); // Adjust speed of deletion here
-            });
-
-            // Step 2: Type the new word after a delay
-            setTimeout(() => {
-                typeWord();
-            }, currentWord.length * 50 + 200); // Wait for deletion to complete
-        }
-
-        // Start typing the first word immediately on load
-        typeWord();
-
-        // Change word every 3 seconds
-        setInterval(changeWord, 3000);
-    </script>
+  <main class="terminal">
+    <span class="line1">c#de name</span>
+    <span class="line2">software<span class="cursor" aria-hidden="true"></span></span>
+  </main>
+  <div class="logo" aria-hidden="true">
+    <span class="logo-line1">c#</span>
+    <span class="logo-line2">ns</span>
+  </div>
+  <footer>
+    © 2025 Code Name Software · <a href="mailto:you@example.com">Contact</a>
+  </footer>
 </body>
 </html>
